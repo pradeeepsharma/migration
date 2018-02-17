@@ -7,6 +7,7 @@ public class AccessModifiers extends Accessible{
 	Accessible access = new Accessible();
 	
 	public void printing() {
+		System.out.println("some change");
 		
 	}
 
