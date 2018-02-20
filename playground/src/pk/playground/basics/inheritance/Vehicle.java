@@ -13,4 +13,12 @@ public class Vehicle {
 		this.body = body;
 	}
 
+	public void printSpecification() {
+		System.out.println("Vehicle specification");
+	}
+	
+	public static void  staticMethod() {
+		System.out.println("inside parent class");
+	}
+
 }
