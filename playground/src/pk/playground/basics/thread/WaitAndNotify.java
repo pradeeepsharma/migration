@@ -15,6 +15,12 @@ public class WaitAndNotify {
 		notifyingThread.setName("NotifyingThread");
 		waitingThread.start();
 		notifyingThread.start();
+		try {
+			notifyingThread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
