@@ -1,4 +1,4 @@
-package pk.playground.basics.thread;
+package pk.playground.basics.thread.sync;
 
 import java.util.List;
 
