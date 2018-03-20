@@ -26,4 +26,8 @@ public class User {
 		this.name = name;
 	}
 
+	private void doPrint() {
+		System.out.println("inside private method");
+	}
+
 }
