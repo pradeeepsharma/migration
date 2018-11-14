@@ -1,6 +1,6 @@
 package pk.playground.basics.inheritance;
 
-import org.junit.jupiter.api.Test;
+/*import org.junit.jupiter.api.Test;
 
 class InhtTesterTest {
 	private InhtTester inheritanceTester = new InhtTester();
@@ -10,4 +10,4 @@ class InhtTesterTest {
 		inheritanceTester.printSpecification();
 	}
 
-}
+}*/
