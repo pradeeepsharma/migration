@@ -1,47 +1,44 @@
-package pk.playground.statistics;
+import java.util.*;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.Format;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-
-import static java.util.stream.Collectors.joining;
-
-public class Solution {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt(); // read an integer from input stream.
-        System.out.println("Enter "+n+" numbers after enter");
-
-        List<Integer> inputNumbers = new ArrayList<>();
+class Solution {
+    int solution(int[] A) {
+        int n = A.length;
+        int[] L = new int[n + 1];
+        L[0] = -1;
         for (int i = 0; i < n; i++) {
-            inputNumbers.add(scanner.nextInt());
+            L[i + 1] = A[i];
         }
-        printMeanOfNumbers(inputNumbers);
-        printMeadianOfNumbers(inputNumbers);
+        int count = 0;
+        int pos = (n + 1) / 2;
+        for(int j=0;j<n;j++) {
+            int candidate = A[j];
+            for (int i = 1; i <= n; i++) {
+                if (L[i] == candidate)
+                    count = count + 1;
+            }
+            if (count > pos)
+                return candidate;
+        }
+        return (-1);
     }
 
-    private static void printMeanOfNumbers(List<Integer> inputNumbers) {
-        float numberOfElements  = inputNumbers.size();
-        Integer totalOfInputElements = getTotalOfInputElements(inputNumbers);
-        BigDecimal mean = new BigDecimal(totalOfInputElements.intValue()/ numberOfElements);
-        //System.out.println("Mean :"+mean);
-        Format twoDecimalFormat = new DecimalFormat("#.0");
-        System.out.println("Formated Number :"+twoDecimalFormat.format(mean));
-    }
-
-    private static Integer getTotalOfInputElements(List<Integer> inputNumbers) {
-        return inputNumbers.stream().reduce(Integer.valueOf("0"), (int1,int2)->int1+int2);
-    }
-
-    private static void printMeadianOfNumbers(List<Integer> inputNumbers) {
-        Object[] objects = inputNumbers.toArray().;
-        Arrays.copyOfobjects);
-    }
-
+   /* public int solution(IntList L) {
+        boolean listContinus = true;
+        int count =0;
+        IntList nextNode = L.next;
+        while(listContinus){
+            count++;
+            if(nextNode==null)
+                listContinus = false;
+            nextNode= nextNode.next;
+        }
+        return count;
+    }*/
 }
 
+/*
+class IntList{
+    public int value;
+    public IntList next;
 
+}*/
