@@ -12,10 +12,10 @@ public class ThreadJoining {
 			worker1.start();
 			
 			worker2.start();
-			worker1.join();
-			
 			worker2.join();
-			
+			worker1.join();
+
+
 			worker3.join();
 			
 		} catch (InterruptedException e) {
@@ -40,6 +40,7 @@ class Worker extends Thread {
 		String threadName = Thread.currentThread().getName();
 		System.out.println(threadName + " :STARTED");
 		for (int i = 0; i < 10; i++) {
+			Math.random();
 			System.out.println(threadName + " :RUNNING "+i );
 		}
 		System.out.println(threadName + " :STOPPED");
