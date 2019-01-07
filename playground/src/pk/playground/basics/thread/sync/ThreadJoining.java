@@ -8,18 +8,16 @@ public class ThreadJoining {
 		Worker worker3 = new Worker("worker 3");
 
 		try {
-			worker3.start();
 			worker1.start();
-			
-			worker2.start();
-			worker2.join();
 			worker1.join();
 
+			worker2.start();
+			worker2.join();
 
+			worker3.start();
 			worker3.join();
 			
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -32,7 +30,6 @@ class Worker extends Thread {
 
 	public Worker(String name) {
 		super(name);
-		// this.name = name;
 	}
 
 	@Override
