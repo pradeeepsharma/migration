@@ -12,7 +12,7 @@ public class Lock /*implements AutoCloseable*/ {
         System.out.println("Lock accured by :" + Thread.currentThread().getName());
     }
 
-    public void unLock() {
+    public synchronized void unLock() {
         System.out.println("Lock released by :" + Thread.currentThread().getName());
         if (isLocked) {
             isLocked = false;
