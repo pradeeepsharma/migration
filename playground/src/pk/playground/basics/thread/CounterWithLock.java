@@ -5,6 +5,11 @@ import pk.playground.basics.thread.locks.Lock;
 public class CounterWithLock {
     public static void main(String[] args) {
         Counter counter = new Counter();
+       /* for(int i=0;i<100;i++){
+            Thread thread = new Thread(() -> incrementer(counter));
+            thread.setName("T"+i);
+            thread.start();
+        }*/
         Thread t1 = new Thread(() -> incrementer(counter));
         Thread t2 = new Thread(() -> incrementer(counter));
         Thread t3 = new Thread(() -> incrementer(counter));
@@ -16,8 +21,8 @@ public class CounterWithLock {
         t3.start();
     }
 
-    public static void incrementer(Counter counter){
-        System.out.println("Counter value :"+counter.getValule()+" for thread :"+Thread.currentThread().getName());
+    public static void incrementer(Counter counter) {
+        System.out.println("Counter value :" + counter.getValule() + " for thread :" + Thread.currentThread().getName());
         counter.increase();
     }
 }
@@ -27,19 +32,19 @@ class Counter {
     int counter = 0;
 
     public int increase() {
-        try {
+         try {
             lock.lock();
-            counter++;
+            for (int i = 1; i <= 10; i++){
+                counter++;
+            }
             lock.unLock();
         } catch (InterruptedException ie) {
             ie.printStackTrace();
-        } finally {
-            System.out.println("Closing all threads");
         }
         return counter;
     }
 
-    public int getValule(){
+    public int getValule() {
         return counter;
     }
 }

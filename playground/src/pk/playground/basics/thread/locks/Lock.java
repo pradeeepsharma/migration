@@ -1,22 +1,27 @@
 package pk.playground.basics.thread.locks;
 
-public class Lock implements AutoCloseable{
+public class Lock /*implements AutoCloseable*/ {
     private boolean isLocked = false;
 
-    public void lock() throws InterruptedException {
+    public synchronized void lock() throws InterruptedException {
         while (isLocked) {
+            System.out.println("Lock seen by :" + Thread.currentThread().getName());
             wait();
         }
         isLocked = true;
+        System.out.println("Lock accured by :" + Thread.currentThread().getName());
     }
 
-    public void unLock(){
-        isLocked = false;
-        notify();
+    public void unLock() {
+        System.out.println("Lock released by :" + Thread.currentThread().getName());
+        if (isLocked) {
+            isLocked = false;
+            notify();
+        }
     }
 
-    @Override
+    /*@Override
     public void close(){
         isLocked = false;
-    }
+    }*/
 }
