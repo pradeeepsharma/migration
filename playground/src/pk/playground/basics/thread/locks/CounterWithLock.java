@@ -1,6 +1,4 @@
-package pk.playground.basics.thread;
-
-import pk.playground.basics.thread.locks.Lock;
+package pk.playground.basics.thread.locks;
 
 public class CounterWithLock {
     public static void main(String[] args) {
