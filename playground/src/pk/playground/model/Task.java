@@ -30,4 +30,8 @@ public class Task {
     public int getOperand1() {
         return operand1;
     }
+
+    public Operation getOperation() {
+        return operation;
+    }
 }
