@@ -14,15 +14,17 @@ public class Consumer implements Runnable {
 
     @Override
     public void run(){
-        while(linkedBlockingQueue.isEmpty()){
-            try {
-                Task take = linkedBlockingQueue.take();
+        try {
+        Task takenTask = null;
+        while((takenTask=linkedBlockingQueue.take()).getOperand1()!=0){
+                Task take = takenTask;
                 take.execute();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+              //  Thread.sleep(10);
+        }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
