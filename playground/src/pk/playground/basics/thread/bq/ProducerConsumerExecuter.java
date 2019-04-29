@@ -4,30 +4,27 @@ package pk.playground.basics.thread.bq;
 import pk.playground.model.Operation;
 import pk.playground.model.Task;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class ProducerConsumerExecuter {
-    private static BlockingQueue<Task> taskQueue = new ArrayBlockingQueue<>(4);
+    private static LinkedBlockingDeque<Task> taskDeQueue = new LinkedBlockingDeque<>(4);
 
     public static void main(String[] args) {
         ExecutorService queueExecuter = Executors.newFixedThreadPool(5);
-        queueExecuter.execute(new Thread((new Producer(taskQueue))));
-        queueExecuter.execute(new Thread((new AdditionConsumer(taskQueue))));
-        queueExecuter.execute(new Thread((new SubtractionConsumer(taskQueue))));
-        queueExecuter.execute(new Thread((new MultiplicationConsumer(taskQueue))));
-        queueExecuter.execute(new Thread((new DivisionConsumer(taskQueue))));
+        queueExecuter.execute(new Thread((new Producer(taskDeQueue))));
+        queueExecuter.execute(new Thread((new AdditionConsumer(taskDeQueue))));
+        queueExecuter.execute(new Thread((new SubtractionConsumer(taskDeQueue))));
+        queueExecuter.execute(new Thread((new MultiplicationConsumer(taskDeQueue))));
+        queueExecuter.execute(new Thread((new DivisionConsumer(taskDeQueue))));
 
     }
 }
 
 
 class AdditionConsumer implements Runnable {
-    private BlockingQueue<Task> operationQueue;
+    private LinkedBlockingDeque<Task> operationQueue;
 
-    public AdditionConsumer(BlockingQueue<Task> operationQueue) {
+    public AdditionConsumer(LinkedBlockingDeque<Task> operationQueue) {
         this.operationQueue = operationQueue;
     }
 
@@ -37,8 +34,8 @@ class AdditionConsumer implements Runnable {
             Task takenTask = null;
             while ((takenTask = operationQueue.take()).getOperand1() != 0) {
                 if(Operation.ADD != takenTask.getOperation()){
-                    System.out.println("Notifying others from AdditionConsumer");
-                    notifyAll();
+                    operationQueue.push(takenTask);
+                    System.out.println("Pushed back to queue :"+operationQueue.size());
                 }
                 takenTask.execute();
             }
@@ -50,9 +47,9 @@ class AdditionConsumer implements Runnable {
     }
 }
 class SubtractionConsumer implements Runnable {
-    private BlockingQueue<Task> operationQueue;
+    private LinkedBlockingDeque<Task> operationQueue;
 
-    public SubtractionConsumer(BlockingQueue<Task> operationQueue) {
+    public SubtractionConsumer(LinkedBlockingDeque<Task> operationQueue) {
         this.operationQueue = operationQueue;
     }
 
@@ -62,8 +59,7 @@ class SubtractionConsumer implements Runnable {
             Task takenTask = null;
             while ((takenTask = operationQueue.take()).getOperand1() != 0) {
                 if(Operation.SUB != takenTask.getOperation()){
-                    System.out.println("Notifying others from SubtractionConsumer");
-                    notifyAll();
+                    System.out.println("Pushed back to queue :"+operationQueue.size());
                 }
                 takenTask.execute();
             }
@@ -76,9 +72,9 @@ class SubtractionConsumer implements Runnable {
 }
 
 class MultiplicationConsumer implements Runnable {
-    private BlockingQueue<Task> operationQueue;
+    private LinkedBlockingDeque<Task> operationQueue;
 
-    public MultiplicationConsumer(BlockingQueue<Task> operationQueue) {
+    public MultiplicationConsumer(LinkedBlockingDeque<Task> operationQueue) {
         this.operationQueue = operationQueue;
     }
 
@@ -88,8 +84,7 @@ class MultiplicationConsumer implements Runnable {
             Task takenTask = null;
             while ((takenTask = operationQueue.take()).getOperand1() != 0) {
                 if(Operation.MUL != takenTask.getOperation()){
-                    System.out.println("Notifying others from MultiplicationConsumer");
-                    notifyAll();
+                    System.out.println("Pushed back to queue :"+operationQueue.size());
                 }
                 takenTask.execute();
             }
@@ -102,9 +97,9 @@ class MultiplicationConsumer implements Runnable {
 }
 
 class DivisionConsumer implements Runnable {
-    private BlockingQueue<Task> operationQueue;
+    private LinkedBlockingDeque<Task> operationQueue;
 
-    public DivisionConsumer(BlockingQueue<Task> operationQueue) {
+    public DivisionConsumer(LinkedBlockingDeque<Task> operationQueue) {
         this.operationQueue = operationQueue;
     }
 
@@ -114,8 +109,7 @@ class DivisionConsumer implements Runnable {
             Task takenTask = null;
             while ((takenTask = operationQueue.take()).getOperand1() != 0) {
                 if(Operation.DIV != takenTask.getOperation()){
-                    System.out.println("Notifying others from DivisionConsumer");
-                    notifyAll();
+                    System.out.println("Pushed back to queue :"+operationQueue.size());
                 }
                 takenTask.execute();
             }
